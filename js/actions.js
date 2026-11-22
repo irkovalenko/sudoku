@@ -5,6 +5,70 @@ import {
 } from "./tile.js";
 import { saveHistory } from "./history.js";
 
+function animateScore(el, from, to, duration = 400) {
+  if (el._rafId) cancelAnimationFrame(el._rafId);
+
+  el.classList.remove("score-pop");
+  void el.offsetWidth;
+  el.classList.add("score-pop");
+
+  const start = performance.now();
+  const step = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.innerText = Math.round(from + (to - from) * eased);
+    if (t < 1) {
+      el._rafId = requestAnimationFrame(step);
+    } else {
+      el.innerText = to;
+      el._rafId = null;
+    }
+  };
+  el._rafId = requestAnimationFrame(step);
+}
+
+function flyCoconut(targetEl, onLand, duration = 750) {
+  const size = 32;
+  const coconut = document.createElement("span");
+  coconut.textContent = "🥥";
+  Object.assign(coconut.style, {
+    position: "fixed",
+    left: "0",
+    top: "0",
+    fontSize: `${size}px`,
+    lineHeight: "1",
+    pointerEvents: "none",
+    zIndex: "9999",
+    willChange: "transform",
+  });
+  document.body.appendChild(coconut);
+
+  const rect = targetEl.getBoundingClientRect();
+  const endX = rect.left + rect.width / 2 - size / 2;
+  const endY = rect.top + rect.height / 2 - size / 2;
+
+  const startX = window.innerWidth / 2 - size / 2 + (Math.random() - 0.5) * 160;
+  const startY = window.innerHeight + 10;
+
+
+  const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 140;
+  const midY = endY + (startY - endY) * 0.4;
+
+  const anim = coconut.animate(
+    [
+      { transform: `translate(${startX}px, ${startY}px) rotate(0deg) scale(1)` },
+      { transform: `translate(${midX}px, ${midY}px) rotate(360deg) scale(1.25)`, offset: 0.5 },
+      { transform: `translate(${endX}px, ${endY}px) rotate(720deg) scale(0.6)` },
+    ],
+    { duration, easing: "cubic-bezier(0.3, 0.1, 0.3, 1)", fill: "forwards" }
+  );
+
+  anim.onfinish = () => {
+    coconut.remove();
+    onLand();
+  };
+}
+
 export function placeNumber(tile, num) {
   if (isLocked(tile)) return;
 
@@ -25,6 +89,12 @@ export function placeNumber(tile, num) {
 
   if (solution[r][c] === num) {
     tile.classList.remove("tile-wrong");
+    const scoreEl = document.getElementById("score");
+    state.scores += 1;
+    const target = state.scores;
+
+    // Logic updates immediately; the display updates when the coconut lands
+    flyCoconut(scoreEl, () => animateScore(scoreEl, target - 1, target));
   } else {
     state.errors += 1;
     document.getElementById("errors").innerText = state.errors;
