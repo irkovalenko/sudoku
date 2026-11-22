@@ -93,7 +93,6 @@ export function placeNumber(tile, num) {
     state.scores += 1;
     const target = state.scores;
 
-    // Logic updates immediately; the display updates when the coconut lands
     flyCoconut(scoreEl, () => animateScore(scoreEl, target - 1, target));
   } else {
     state.errors += 1;
@@ -142,4 +141,17 @@ export function eraseTile() {
   setValue(tile, "");
   setNotes(tile, "");
   tile.classList.remove("tile-wrong");
+}
+
+export function giveSolution() {
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const tile = document.getElementById(`${r}-${c}`);
+      if (isLocked(tile)) continue;
+
+      setNotes(tile, "");
+      setValue(tile, solution[r][c]);
+      tile.classList.remove("tile-wrong");
+    }
+  }
 }
