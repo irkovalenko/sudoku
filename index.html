@@ -4,14 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudoku</title>
+    <link rel="icon" type="image/x-icon" href="media/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="game.js"></script>
+    <script type="module" src="js/main.js"></script>
   </head>
   <body>
     <div class="panel">
       <div class="stat">
-        <span class="stat-label">Difficulty</span>
-        <span class="stat-value" id="difficulty">Easy</span>
+        <div class="stat dropdown">
+          <span class="stat-label">Difficulty</span>
+          <button
+            class="stat-value dropdown-toggle"
+            id="difficulty"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          ></button>
+          <ul
+            class="dropdown-menu"
+            id="difficulty-menu"
+            role="listbox"
+            hidden
+          ></ul>
+        </div>
       </div>
       <div class="stat">
         <span class="stat-label">Score</span>
@@ -20,6 +34,13 @@
       <div class="stat">
         <span class="stat-label">Mistakes</span>
         <span class="stat-value" id="errors">0</span>
+      </div>
+    </div>
+
+    <div id="modal" class="modal" hidden>
+      <div class="modal-box" role="dialog" aria-modal="true">
+        <button class="modal-close" aria-label="Close">×</button>
+        <div id="teasing-message" class="modal-content"></div>
       </div>
     </div>
 
