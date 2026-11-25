@@ -25,17 +25,8 @@ body {
     -webkit-user-select: none;
     user-select: none;
 
-    background:
-        linear-gradient(180deg,
-            #1683dd 0%,
-            #4fb0f0 28%,
-            #cfeaf9 46%,
-            #1ab3c8 49%,
-            #2fc7d3 58%,
-            #7fe0dd 68%,
-            #bdf0e8 72%,
-            #f6e6b8 76%,
-            #ecd49a 100%) fixed;
+    background-image: url(media/images/beach.jpeg);
+    background-size: cover;
 }
 
 body::before {
@@ -47,12 +38,6 @@ body::before {
     height: 20%;
     z-index: -2;
     pointer-events: none;
-    background:
-        radial-gradient(ellipse 18% 55% at 12% 85%, #fff 0%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(ellipse 22% 60% at 30% 95%, #fff 0%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(ellipse 16% 45% at 55% 100%, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(ellipse 24% 60% at 82% 90%, #fff 0%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(ellipse 14% 40% at 97% 80%, #fff 0%, rgba(255, 255, 255, 0) 70%);
 }
 
 
@@ -65,8 +50,6 @@ body::after {
     height: 90px;
     z-index: -1;
     pointer-events: none;
-    background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 55 Q75 15 150 50 T300 50 T450 50 T600 50 T750 50 T900 50 T1050 50 T1200 50 V100 H0Z' fill='white' fill-opacity='0.35'/%3E%3Cpath d='M0 60 Q75 30 150 58 T300 58 T450 58 T600 58 T750 58 T900 58 T1050 58 T1200 58' fill='none' stroke='white' stroke-width='6' stroke-opacity='0.85'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 
 .tile,
@@ -311,7 +294,6 @@ body::after {
 
 .modal[hidden] {
     display: none;
-    /* otherwise display:flex beats the hidden attribute */
 }
 
 .modal-box {
@@ -334,7 +316,6 @@ body::after {
 
 .modal-content img {
     width: 48px;
-    /* overrides the width="24" in the message */
     vertical-align: middle;
     margin-left: 6px;
 }
