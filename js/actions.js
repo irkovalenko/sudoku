@@ -6,9 +6,13 @@ import {
 import { saveHistory } from "./history.js";
 import { updateNumberPad } from "./numberpad.js";
 
-const music = new Audio('media/sounds/mistake_seagull.mp3');
-music.loop = false;
-music.volume = 0.5;
+const musicMistake = new Audio('media/sounds/mistake_seagull.mp3');
+const musicScore = new Audio('media/sounds/point_coconut.mp3');
+musicMistake.loop = false;
+musicMistake.volume = 0.5;
+
+musicScore.loop = false;
+musicScore.volume = 0.5;
 
 function animateScore(el, from, to, duration = 400) {
   if (el._rafId) cancelAnimationFrame(el._rafId);
@@ -99,11 +103,12 @@ export function placeNumber(tile, num) {
     const target = state.scores;
 
     flyCoconut(scoreEl, () => animateScore(scoreEl, target - 1, target));
+    musicScore.play();
   } else {
     state.errors += 1;
     document.getElementById("errors").innerText = state.errors;
     tile.classList.add("tile-wrong");
-    music.play();
+    musicMistake.play();
   }
   updateNumberPad();
 }
