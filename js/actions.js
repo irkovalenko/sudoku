@@ -5,6 +5,10 @@ import {
 } from "./tile.js";
 import { saveHistory } from "./history.js";
 
+const music = new Audio('media/sounds/mistake_seagull.mp3');
+music.loop = false;
+music.volume = 0.5;
+
 function animateScore(el, from, to, duration = 400) {
   if (el._rafId) cancelAnimationFrame(el._rafId);
 
@@ -98,6 +102,7 @@ export function placeNumber(tile, num) {
     state.errors += 1;
     document.getElementById("errors").innerText = state.errors;
     tile.classList.add("tile-wrong");
+    music.play();
   }
 }
 

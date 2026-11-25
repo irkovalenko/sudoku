@@ -8,32 +8,38 @@
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="js/main.js"></script>
   </head>
+
   <body>
     <div class="panel">
-      <div class="stat">
-        <div class="stat dropdown">
-          <span class="stat-label">Difficulty</span>
-          <button
-            class="stat-value dropdown-toggle"
-            id="difficulty"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-          ></button>
-          <ul
-            class="dropdown-menu"
-            id="difficulty-menu"
-            role="listbox"
-            hidden
-          ></ul>
-        </div>
+      <!-- Difficulty -->
+      <div class="stat dropdown">
+        <span class="stat-label">Difficulty</span>
+        <button
+          class="stat-value dropdown-toggle"
+          id="difficulty"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+        ></button>
+        <ul
+          class="dropdown-menu"
+          id="difficulty-menu"
+          role="listbox"
+          hidden
+        ></ul>
       </div>
       <div class="stat">
         <span class="stat-label">Score</span>
-        <span class="stat-value" id="score">0</span>
+        <div class="stat-row">
+          <span class="stat-value" id="score">0</span>
+          <img src="media/images/coconut.png" alt="Coconut" />
+        </div>
       </div>
       <div class="stat">
         <span class="stat-label">Mistakes</span>
-        <span class="stat-value" id="errors">0</span>
+        <div class="stat-row">
+          <span class="stat-value" id="errors">0</span>
+          <img src="media/images/seagull.png" alt="Seagull" />
+        </div>
       </div>
     </div>
 
@@ -48,19 +54,19 @@
 
     <div id="tools">
       <button id="undo" data-tooltip="undo">
-        <span class="tool-icon">↶</span>
+        <img src="media/images/tools/undo.png" class="tool-icon" />
       </button>
       <button id="erase" data-tooltip="erase">
-        <span class="tool-icon">⌫</span>
+        <img src="media/images/tools/erase.png" class="tool-icon" />
       </button>
       <button id="notes" data-tooltip="notes">
         <span class="tool-icon">✎</span>
       </button>
       <button id="help" data-tooltip="help">
-        <span class="tool-icon">💡</span>
+        <img src="media/images/tools/help.png" class="tool-icon" />
       </button>
       <button id="solution" data-tooltip="view solution">
-        <span class="tool-icon">✔️</span>
+        <span class="tool-icon">💡</span>
       </button>
     </div>
 
