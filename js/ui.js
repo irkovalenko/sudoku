@@ -4,6 +4,7 @@ import { selectNumber, selectTile, eraseTile, toggleNotesMode, moveSelection, gi
 import { undo } from "./history.js";
 import { openModal, isModalOpen } from "./modal.js";
 import { helpTeasingMessages } from "./messages.js";
+import { updateNumberPad } from "./numberpad.js";
 
 const arrows = {
     arrowup: [-1, 0],
@@ -22,6 +23,7 @@ export function buildNumberPad() {
         number.addEventListener("click", () => selectNumber(number));
         container.appendChild(number);
     }
+    updateNumberPad();
 }
 
 export function buildBoard() {
@@ -33,6 +35,7 @@ export function buildBoard() {
             container.append(tile);
         }
     }
+    updateNumberPad();
 }
 
 export function bindControls() {
@@ -57,7 +60,8 @@ export function bindControls() {
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         if (/^[1-9]$/.test(key)) {
-            selectNumber(document.getElementById(key));
+            const btn = document.getElementById(key);
+            if (btn.style.visibility !== "hidden") selectNumber(btn);
         } else if (key === "backspace" || key === "delete") {
             eraseTile();
         } else if (key === "n") {

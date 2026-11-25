@@ -4,6 +4,7 @@ import {
   getValue, setValue, getNotes, setNotes, toggleNote, isLocked, setTileSelected,
 } from "./tile.js";
 import { saveHistory } from "./history.js";
+import { updateNumberPad } from "./numberpad.js";
 
 const music = new Audio('media/sounds/mistake_seagull.mp3');
 music.loop = false;
@@ -104,6 +105,7 @@ export function placeNumber(tile, num) {
     tile.classList.add("tile-wrong");
     music.play();
   }
+  updateNumberPad();
 }
 
 export function selectNumber(numberEl) {
@@ -146,6 +148,7 @@ export function eraseTile() {
   setValue(tile, "");
   setNotes(tile, "");
   tile.classList.remove("tile-wrong");
+  updateNumberPad();
 }
 
 export function giveSolution() {
@@ -159,4 +162,5 @@ export function giveSolution() {
       tile.classList.remove("tile-wrong");
     }
   }
+  updateNumberPad();
 }

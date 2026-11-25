@@ -2,6 +2,7 @@ import { state } from "./state.js";
 import {
   getValue, setValue, getNotes, setNotes, setTileSelected,
 } from "./tile.js";
+import { updateNumberPad } from "./numberpad.js";
 
 export function saveHistory(tile) {
   state.history.push({
@@ -21,4 +22,5 @@ export function undo() {
   setNotes(tile, snapshot.notes);
   tile.classList.toggle("tile-wrong", snapshot.wrong);
   setTileSelected(tile);
+  updateNumberPad();
 }
