@@ -1,12 +1,14 @@
-export function ratParade(duration = 6000) {
-  const size = 48;
+export function ratParade() {
+  const size = Math.max(32, Math.min(64, window.innerWidth * 0.12));
+  const duration = Math.max(4500, window.innerWidth * 5);
+
   const wrap = document.createElement("div");
   Object.assign(wrap.style, {
     position: "fixed",
     left: "0",
-    bottom: "40%",
+    top: "40%",
     display: "flex",
-    gap: "4px",
+    gap: `${size * 0.08}px`,
     fontSize: `${size}px`,
     lineHeight: "1",
     whiteSpace: "nowrap",
@@ -22,7 +24,7 @@ export function ratParade(duration = 6000) {
     el.animate(
       [
         { transform: "translateY(0)" },
-        { transform: "translateY(-12px)" },
+        { transform: `translateY(${-size * 0.25}px)` },
         { transform: "translateY(0)" },
       ],
       { duration: 350, iterations: Infinity, delay: i * 90, easing: "ease-in-out" }
@@ -39,6 +41,5 @@ export function ratParade(duration = 6000) {
     ],
     { duration, easing: "linear", fill: "forwards" }
   );
-
   anim.onfinish = () => wrap.remove();
 }

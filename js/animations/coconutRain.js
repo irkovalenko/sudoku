@@ -1,4 +1,5 @@
 export function coconutRain(count = 25) {
+  const size = Math.min(40, window.innerWidth * 0.09);
   for (let i = 0; i < count; i++) {
     const el = document.createElement("span");
     el.textContent = "🥥";
@@ -6,7 +7,7 @@ export function coconutRain(count = 25) {
       position: "fixed",
       left: `${5 + Math.random() * 90}vw`,
       top: `${10 + Math.random() * 70}vh`,
-      fontSize: "40px",
+      fontSize: `${size}px`,
       lineHeight: "1",
       pointerEvents: "none",
       zIndex: "9999",

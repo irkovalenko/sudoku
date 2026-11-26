@@ -359,6 +359,73 @@ body::after {
     background: var(--select);
 }
 
+#progress {
+    width: min(94vw, 560px);
+    margin-top: auto;
+}
+
+#numbers {
+    margin-top: 0;
+    padding-top: 12px;
+}
+
+.wave-box {
+    position: relative;
+    height: clamp(18px, 4.5vw, 26px);
+}
+
+.wave {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.wave path {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.wave-track path { stroke: rgba(255, 255, 255, 0.55); }
+.wave-fill path  { stroke: var(--navy); }
+
+.wave-fill {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.5s ease-out;
+}
+
+.milestones {
+    position: relative;
+    height: clamp(22px, 6vw, 32px);
+    font-size: clamp(18px, 5vw, 26px);
+    line-height: 1.2;
+}
+
+.milestone {
+    position: absolute;
+    top: 2px;
+    translate: -50% 0;
+    filter: grayscale(1);
+    opacity: 0.45;
+    transition: scale 0.3s, opacity 0.3s, filter 0.3s;
+}
+
+.milestone[data-at="100"] { translate: -90% 0; }
+
+.milestone.reached {
+    filter: none;
+    opacity: 1;
+    scale: 1.2;
+}
+
+.tool-emoji {
+    font-size: 26px;
+    line-height: 1;
+}
+
 @keyframes modal-fade {
     from {
         opacity: 0;

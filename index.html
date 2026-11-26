@@ -61,6 +61,39 @@
       <button id="help" data-tooltip="help">
         <img src="media/images/tools/help.png" class="tool-icon" />
       </button>
+      <button id="silent" data-tooltip="silent mode">
+        <span class="tool-emoji">🔊</span>
+      </button>
+    </div>
+
+    <div id="progress">
+      <div class="wave-box">
+        <svg
+          class="wave wave-track"
+          viewBox="-4 0 408 24"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 12 Q12.5 0 25 12 T50 12 T75 12 T100 12 T125 12 T150 12 T175 12 T200 12 T225 12 T250 12 T275 12 T300 12 T325 12 T350 12 T375 12 T400 12"
+          />
+        </svg>
+        <svg
+          class="wave wave-fill"
+          id="progress-fill"
+          viewBox="-4 0 408 24"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 12 Q12.5 0 25 12 T50 12 T75 12 T100 12 T125 12 T150 12 T175 12 T200 12 T225 12 T250 12 T275 12 T300 12 T325 12 T350 12 T375 12 T400 12"
+          />
+        </svg>
+      </div>
+      <div class="milestones">
+        <span class="milestone" data-at="25" style="left: 25%">🐚</span>
+        <span class="milestone" data-at="50" style="left: 50%">🐟</span>
+        <span class="milestone" data-at="75" style="left: 75%">🦈</span>
+        <span class="milestone" data-at="100" style="left: 100%">🐀</span>
+      </div>
     </div>
 
     <div id="numbers"></div>

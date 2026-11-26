@@ -6,6 +6,7 @@ import { openModal, isModalOpen } from "./modal.js";
 import { helpTeasingMessages } from "./messages.js";
 import { coconutRain } from "./animations/coconutRain.js";
 import { updateNumberPad } from "./numberpad.js";
+import { isSilent, toggleSilent, startMusic } from "./audio.js";
 
 const arrows = {
     arrowup: [-1, 0],
@@ -36,7 +37,7 @@ export function buildBoard() {
             container.append(tile);
         }
     }
-    updateNumberPad();
+    updateNumberPad({ celebrate: false });
 }
 
 export function bindControls() {
@@ -77,4 +78,16 @@ export function bindControls() {
             moveSelection(...arrows[key]);
         }
     });
+
+    const silentBtn = document.getElementById("silent");
+    const renderSilent = () => {
+        const on = isSilent();
+        silentBtn.classList.toggle("tool-active", on);
+        silentBtn.querySelector(".tool-emoji").textContent = on ? "🔇" : "🔊";
+    };
+    renderSilent();
+    silentBtn.addEventListener("click", () => { toggleSilent(); renderSilent(); });
+
+    document.addEventListener("pointerdown", startMusic, { once: true });
+    document.addEventListener("keydown", startMusic, { once: true });
 }
