@@ -1,9 +1,10 @@
 import { board } from "./puzzle.js";
 import { createTile } from "./tile.js";
-import { selectNumber, selectTile, eraseTile, moveSelection, giveSolution } from "./actions.js";
+import { selectNumber, selectTile, eraseTile, moveSelection, giveHint, giveSolution} from "./actions.js";
 import { undo } from "./history.js";
 import { openModal, isModalOpen } from "./modal.js";
 import { helpTeasingMessages } from "./messages.js";
+import { coconutRain } from "./animations/coconutRain.js";
 import { updateNumberPad } from "./numberpad.js";
 
 const arrows = {
@@ -42,9 +43,17 @@ export function bindControls() {
     document.getElementById("undo").addEventListener("click", undo);
     document.getElementById("erase").addEventListener("click", eraseTile);
     document.getElementById("help").addEventListener("click", () => {
-        openModal(helpTeasingMessages[0]);
+        openModal(helpTeasingMessages[0], [
+            {
+                label: "Tak, chlebek nie da rady",
+                onClick: () => { giveSolution(); coconutRain(); },
+            },
+            {
+                label: "Nie, walczę dalej i chcę wskazówkę",
+                onClick: giveHint,
+            },
+        ]);
     });
-    document.getElementById("solution").addEventListener("click", giveSolution);
 
     document.addEventListener("keydown", (e) => {
         if (isModalOpen()) return;
@@ -63,8 +72,6 @@ export function bindControls() {
             if (btn.style.visibility !== "hidden") selectNumber(btn);
         } else if (key === "backspace" || key === "delete") {
             eraseTile();
-        } else if (key === "n") {
-            toggleNotesMode();
         } else if (arrows[key]) {
             e.preventDefault();
             moveSelection(...arrows[key]);

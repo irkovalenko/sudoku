@@ -1,7 +1,6 @@
 import { state } from "./state.js";
 import { solution } from "./puzzle.js";
 import { flyCoconut } from "./animations/flyCoconut.js";
-import { ratParade } from "./animations/ratParade.js";
 import {
   getValue, setValue,isLocked, setTileSelected,
 } from "./tile.js";
@@ -53,7 +52,6 @@ export function placeNumber(tile, num) {
   const [r, c] = tile.id.split("-").map(Number);
 
   saveHistory(tile);
-  setNotes(tile, "");
   setValue(tile, num);
 
   if (solution[r][c] === num) {
@@ -106,8 +104,25 @@ export function eraseTile() {
 
   saveHistory(tile);
   setValue(tile, "");
-  setNotes(tile, "");
   tile.classList.remove("tile-wrong");
+  updateNumberPad();
+}
+
+export function giveHint() {
+  const candidates = [];
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const tile = document.getElementById(`${r}-${c}`);
+      if (getValue(tile) !== String(solution[r][c])) candidates.push([r, c, tile]);
+    }
+  }
+  if (candidates.length === 0) return;
+
+  const [r, c, tile] = candidates[Math.floor(Math.random() * candidates.length)];
+  saveHistory(tile);
+  setValue(tile, solution[r][c]);
+  tile.classList.remove("tile-wrong");
+  setTileSelected(tile);
   updateNumberPad();
 }
 
@@ -117,11 +132,9 @@ export function giveSolution() {
       const tile = document.getElementById(`${r}-${c}`);
       if (isLocked(tile)) continue;
 
-      setNotes(tile, "");
       setValue(tile, solution[r][c]);
       tile.classList.remove("tile-wrong");
     }
   }
   updateNumberPad();
-  ratParade(); // to move it after successfull completion, not autocomplete
 }
