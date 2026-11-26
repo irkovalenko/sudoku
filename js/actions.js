@@ -3,7 +3,7 @@ import { solution } from "./puzzle.js";
 import { flyCoconut } from "./animations/flyCoconut.js";
 import { ratParade } from "./animations/ratParade.js";
 import {
-  getValue, setValue, getNotes, setNotes, toggleNote, isLocked, setTileSelected,
+  getValue, setValue,isLocked, setTileSelected,
 } from "./tile.js";
 import { saveHistory } from "./history.js";
 import { updateNumberPad } from "./numberpad.js";
@@ -97,11 +97,6 @@ export function moveSelection(dr, dc) {
     c = clamp(cc + dc);
   }
   setTileSelected(document.getElementById(`${r}-${c}`));
-}
-
-export function toggleNotesMode() {
-  state.notesMode = !state.notesMode;
-  document.getElementById("notes").classList.toggle("tool-active", state.notesMode);
 }
 
 export function eraseTile() {

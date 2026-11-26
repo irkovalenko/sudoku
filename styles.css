@@ -165,27 +165,6 @@ body::after {
     color: var(--wrong);
 }
 
-
-
-.notes {
-    position: absolute;
-    inset: 1px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    font-size: clamp(8px, 2.2vw, 11px);
-    color: #5b6b78;
-    pointer-events: none;
-}
-
-.notes span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
 #tools {
     width: min(92vw, 560px);
     display: flex;
@@ -209,7 +188,7 @@ body::after {
 
     background: rgba(255, 255, 255, 0.95);
     border: 2px solid rgba(11, 61, 122, 0.35);
-    border-radius: 16px;
+    border-radius: 30px;
 
     box-shadow: 0 3px 7px rgba(0, 40, 90, 0.2);
 
@@ -298,9 +277,9 @@ body::after {
     transform: translateY(-3px);
 }
 
+
 .number-selected {
     color: #e8504a;
-    transform: translateY(-6px) scale(1.12);
     text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 

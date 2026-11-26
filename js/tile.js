@@ -32,23 +32,6 @@ export function setValue(tile, v) {
     tile.querySelector(".value").textContent = v;
 }
 
-export function getNotes(tile) {
-    return [...tile.querySelectorAll(".notes span")]
-        .map((s) => s.textContent)
-        .join("");
-}
-
-export function setNotes(tile, str) {
-    tile.querySelectorAll(".notes span").forEach((s, i) => {
-        s.textContent = str.includes(String(i + 1)) ? String(i + 1) : "";
-    });
-}
-
-export function toggleNote(tile, n) {
-    const current = getNotes(tile);
-    setNotes(tile, current.includes(n) ? current.replace(n, "") : current + n);
-}
-
 export function isLocked(tile) {
     return (
         tile.classList.contains("tile-start") ||

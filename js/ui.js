@@ -1,6 +1,6 @@
 import { board } from "./puzzle.js";
 import { createTile } from "./tile.js";
-import { selectNumber, selectTile, eraseTile, toggleNotesMode, moveSelection, giveSolution } from "./actions.js";
+import { selectNumber, selectTile, eraseTile, moveSelection, giveSolution } from "./actions.js";
 import { undo } from "./history.js";
 import { openModal, isModalOpen } from "./modal.js";
 import { helpTeasingMessages } from "./messages.js";
@@ -41,7 +41,6 @@ export function buildBoard() {
 export function bindControls() {
     document.getElementById("undo").addEventListener("click", undo);
     document.getElementById("erase").addEventListener("click", eraseTile);
-    document.getElementById("notes").addEventListener("click", toggleNotesMode);
     document.getElementById("help").addEventListener("click", () => {
         openModal(helpTeasingMessages[0]);
     });
