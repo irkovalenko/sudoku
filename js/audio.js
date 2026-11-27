@@ -2,22 +2,27 @@ const bg = new Audio("media/sounds/background.mp3");
 bg.loop = true;
 bg.volume = 0.25;
 
-let ctx = null;
-
 const sfx = {
   mistake: new Audio("media/sounds/mistake_seagull.mp3"),
   score: new Audio("media/sounds/point_coconut.mp3"),
+  finish: new Audio("media/sounds/finish_song.mp3")
 };
 sfx.mistake.volume = 0.5;
+sfx.finish.volume = 0.8;
+
+let ctx = null;
+
+let sparkleBuffer = null;
+let sparkleLoading = false;
 
 let silent = true;
+let activeSfx = 0;
 
 try {
     const saved = localStorage.getItem("silent");
     if (saved !== null) silent = saved === "1";
 } catch {}
 
-let activeSfx = 0;
 
 function getCtx() {
   if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -53,6 +58,7 @@ export function playSfx(name) {
 export function startMusic() {
   syncBg();
   getCtx();
+  loadSparkle();
 }
 
 export function isSilent() {
@@ -110,4 +116,56 @@ export function playImpact(delay = 0) {
   const out = c.createGain();
   out.connect(c.destination);
   synthThud(c, out, t, vol);
+}
+
+async function loadSparkle() {
+  if (sparkleLoading) return;
+  sparkleLoading = true;
+  try {
+    const res = await fetch("media/sounds/progress_sparkle.mp3");
+    const data = await res.arrayBuffer();
+    sparkleBuffer = await getCtx().decodeAudioData(data);
+  } catch {
+    // no file: the synthesized chime is used instead
+  }
+}   // <-- loadSparkle ends here
+
+const SPARKLE_NOTES = [1046.5, 1318.5, 1568, 2093, 2637];
+
+function synthSparkle(delay = 0, level = 1) {
+  const c = getCtx();
+  const base = c.currentTime + delay;
+  const count = Math.min(SPARKLE_NOTES.length, level + 2);
+
+  for (let i = 0; i < count; i++) {
+    const t = base + i * 0.07;
+    const freq = SPARKLE_NOTES[i];
+
+    [[freq, "sine", 0.16], [freq * 2, "triangle", 0.05]].forEach(([f, type, vol]) => {
+      const o = c.createOscillator();
+      const g = c.createGain();
+      o.type = type;
+      o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      o.connect(g).connect(c.destination);
+      o.start(t);
+      o.stop(t + 0.45);
+    });
+  }
+}
+
+export function playSparkle(delay = 0, level = 1) {
+  if (!sparkleBuffer) return synthSparkle(delay, level);
+
+  const c = getCtx();
+  const src = c.createBufferSource();
+  src.buffer = sparkleBuffer;
+  src.playbackRate.value = 1 + (level - 1) * 0.06;
+
+  const g = c.createGain();
+  g.gain.value = 0.5 + level * 0.1;
+  src.connect(g).connect(c.destination);
+  src.start(c.currentTime + delay);
 }

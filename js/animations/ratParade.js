@@ -6,7 +6,7 @@ export function ratParade() {
   Object.assign(wrap.style, {
     position: "fixed",
     left: "0",
-    top: "40%",
+    top: "20%",
     display: "flex",
     gap: `${size * 0.08}px`,
     fontSize: `${size}px`,

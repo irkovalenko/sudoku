@@ -2,11 +2,12 @@ import { solution } from "./puzzle.js";
 import { getValue } from "./tile.js";
 import { milestoneBurst } from "./animations/milestone.js";
 import { ratParade } from "./animations/ratParade.js";
+import { playSparkle, playSfx } from "./audio.js";
 
 const MILESTONES = [
-  { at: 25, emoji: "🐚" },
-  { at: 50, emoji: "🐟" },
-  { at: 75, emoji: "🦈", caption: "killin' it" },
+  { at: 25, emoji: "🐚", level: 1, caption: "Nice!" },
+  { at: 50, emoji: "🐟", level: 2, caption: "Ryba w wodzie!" },
+  { at: 75, emoji: "🦈", level: 3, caption: "Killin' it!" },
   { at: 100 },
 ];
 const reached = new Set();
@@ -28,14 +29,20 @@ export function updateProgress({ celebrate = true } = {}) {
   const pct = measure();
 
   const fill = document.getElementById("progress-fill");
-  if (fill) fill.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+  if (fill) fill.style.width = `${pct}%`;
 
   for (const m of MILESTONES) {
     if (pct < m.at || reached.has(m.at)) continue;
     reached.add(m.at);
-    document.querySelector(`.milestone[data-at="${m.at}"]`)?.classList.add("reached");
+    document.querySelector(`.node[data-at="${m.at}"]`)?.classList.add("reached");
     if (!celebrate) continue;
-    if (m.emoji) milestoneBurst(m.emoji, m.caption);
-    else ratParade();
+
+    if (m.emoji) {
+      milestoneBurst(m.emoji, m.caption, m.level);
+    } else {
+      playSparkle(0, 3);
+      playSfx("finish");
+      ratParade();
+    }
   }
 }

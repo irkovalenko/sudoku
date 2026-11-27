@@ -9,7 +9,7 @@ export function updateNumberPad(opts) {
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             const tile = document.getElementById(`${r}-${c}`);
-            if (!tile) return;   // board not built yet
+            if (!tile) return;
             const v = getValue(tile);
             if (v !== "" && v === String(solution[r][c])) counts[Number(v)]++;
         }

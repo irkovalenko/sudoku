@@ -1,4 +1,6 @@
-export function milestoneBurst(emoji, caption = "") {
+import { playSparkle } from "../audio.js";
+
+export function milestoneBurst(emoji, caption = "", level = 1) {
   const size = Math.min(window.innerWidth * 0.3, 160);
 
   const wrap = document.createElement("div");
@@ -33,18 +35,18 @@ export function milestoneBurst(emoji, caption = "") {
       marginTop: "8px",
       fontSize: `${Math.max(18, size * 0.22)}px`,
       fontWeight: "bold",
-      color: "#fff8e6",
+      whiteSpace: "nowrap",
+      color: "#090909",
       textShadow: "0 2px 6px rgba(0, 40, 90, 0.7)",
     });
     stage.append(label);
     label.animate(
       [{ opacity: 0 }, { opacity: 0, offset: 0.3 }, { opacity: 1, offset: 0.45 },
-       { opacity: 1, offset: 0.8 }, { opacity: 0 }],
+      { opacity: 1, offset: 0.8 }, { opacity: 0 }],
       { duration: 2200, fill: "both" }
     );
   }
 
-  // Sparkles start after the emoji has grown
   const sparkles = 10;
   for (let i = 0; i < sparkles; i++) {
     const s = document.createElement("span");
@@ -74,6 +76,7 @@ export function milestoneBurst(emoji, caption = "") {
 
   wrap.append(stage);
   document.body.appendChild(wrap);
+  playSparkle(0.7, level);
 
   const anim = main.animate(
     [
