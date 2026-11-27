@@ -1,6 +1,6 @@
 import { board } from "./puzzle.js";
 import { createTile } from "./tile.js";
-import { selectNumber, selectTile, eraseTile, moveSelection, giveHint, giveSolution} from "./actions.js";
+import { selectNumber, selectTile, eraseTile, moveSelection, giveHint, giveSolution } from "./actions.js";
 import { undo } from "./history.js";
 import { openModal, isModalOpen } from "./modal.js";
 import { helpTeasingMessages } from "./messages.js";
@@ -80,14 +80,20 @@ export function bindControls() {
     });
 
     const silentBtn = document.getElementById("silent");
-    const renderSilent = () => {
-        const on = isSilent();
-        silentBtn.classList.toggle("tool-active", on);
-        silentBtn.querySelector(".tool-emoji").textContent = on ? "🔇" : "🔊";
-    };
-    renderSilent();
-    silentBtn.addEventListener("click", () => { toggleSilent(); renderSilent(); });
 
-    document.addEventListener("pointerdown", startMusic, { once: true });
-    document.addEventListener("keydown", startMusic, { once: true });
+    const renderSilent = () => {
+        const muted = isSilent();
+
+        silentBtn.classList.toggle("tool-active", !muted);
+        silentBtn.querySelector(".tool-emoji").textContent = muted ? "🔇" : "🔊";
+    };
+
+    renderSilent();
+
+    silentBtn.addEventListener("click", () => {
+        const muted = toggleSilent();
+        renderSilent();
+
+        if (!muted) startMusic();
+    });
 }

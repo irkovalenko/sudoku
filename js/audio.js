@@ -3,8 +3,6 @@ bg.loop = true;
 bg.volume = 0.25;
 
 let ctx = null;
-let impactBuffer = null;
-let impactLoading = false;
 
 const sfx = {
   mistake: new Audio("media/sounds/mistake_seagull.mp3"),
@@ -12,8 +10,12 @@ const sfx = {
 };
 sfx.mistake.volume = 0.5;
 
-let silent = false;
-try { silent = localStorage.getItem("silent") === "1"; } catch {}
+let silent = true;
+
+try {
+    const saved = localStorage.getItem("silent");
+    if (saved !== null) silent = saved === "1";
+} catch {}
 
 let activeSfx = 0;
 
