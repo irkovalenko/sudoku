@@ -1,3 +1,9 @@
+import { playImpact } from "../audio.js";
+import { impactBurst } from "./impactBurst.js";
+
+const DURATION = 1100;
+const HIT = DURATION * 0.8;
+
 export function coconutRain(count = 25) {
   const size = Math.min(40, window.innerWidth * 0.09);
   for (let i = 0; i < count; i++) {
@@ -22,8 +28,10 @@ export function coconutRain(count = 25) {
         { transform: `scale(7) rotate(${spin}deg)`, opacity: 1, offset: 0.9 },
         { transform: `scale(9) rotate(${spin}deg)`, opacity: 0 },
       ],
-      { duration: 1100, delay: i * 90, easing: "ease-in", fill: "both" }
+      { duration: DURATION, delay: i * 90, easing: "ease-in", fill: "both" }
     );
+    playImpact((i * 90 + HIT) / 1000);
+    if (i % 5 === 2) impactBurst(i * 90 + HIT);
     anim.onfinish = () => el.remove();
   }
 }
